@@ -5,5 +5,11 @@ __1.a__ Install the `tidyverse`, `knitr`, and `here`.
 __1.b__ Load the `tidyverse`, `knitr`, and `here`.
 
 ```{r}
-# your code goes here
+install.packages("tidyverse")
+install.packages("knitr")
+install.packages("here")
+
+library("tidyverse")
+library("knitr")
+library("here")
 ```
