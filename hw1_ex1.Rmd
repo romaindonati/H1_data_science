@@ -1,0 +1,9 @@
+#### Exercise 1: Setup
+
+__1.a__ Install the `tidyverse`, `knitr`, and `here`.
+
+__1.b__ Load the `tidyverse`, `knitr`, and `here`.
+
+```{r}
+# your code goes here
+```

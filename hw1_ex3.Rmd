@@ -1,0 +1,73 @@
+## Exercise 3: New York Air Quality Measurements
+
+In this exercise, you will use the `airquality` dataset from the `datasets` package. 
+This dataset contains information about air quality measurements in New York between May 1973 and September 1973. A preview of the dataset:
+
+```{r}
+
+data(airquality)
+head(airquality)
+
+```
+
+__3.a__ Transform the temperature from degrees Farhenheit to degrees Celsius.
+
+```{r}
+# your code goes here
+```
+
+__3.b__ For how many days has the temperature been higher than 30 degrees?
+
+```{r}
+# your code goes here
+```
+
+__2.c__ How many of those days were in July or August?
+
+```{r}
+# your code goes here
+```
+
+
+__3.d__ Display the average monthly temperature.
+
+```{r}
+# your code goes here
+```
+
+
+__3.e__ Display ten randomly selected observations from the dataset. What happens if you execute your code a few times? How can you make sure that each execution returns the exact 10 rows?
+
+```{r}
+# your code goes here
+```
+
+__2.f__ Display the number of days in each month.
+
+```{r}
+# your code goes here
+```
+
+__3.g__ Display the days where the temperature was lower than 20 degrees with observations
+* where the ozone measurement is missing are removed,
+* and arranged in descending order of the Month and ascending order of Day.
+
+```{r}
+# your code goes here
+```
+
+
+__3.h__ Produce monthly boxplots of temperature. More specifically, your figure 
+should contain 5 boxplots (i.e., one for each month), with months as the x-axis 
+and the temperature as the y-axis. What can you say about the monthly temperature evolution?
+
+```{r}
+# your code goes here
+```
+
+__3.i__ For the days where such data is available, create a scatter plot of the ozone concentration per month. Add the monthly averages in a different color as well as a line that connects them. 
+What can you say about the relationship between Ozone and Month? Is there any similarity to the pevious plot? Describe the link between temperature, ozone and month.
+
+```{r}
+# your code goes here
+```

@@ -1,0 +1,101 @@
+## Exercise 4: Armed Conflicts, Visualization and Fact Checking
+
+### Introduction
+
+For the second homework we will use data from [ACLED - Armed Conflict Location & Event Data Project (ACLED)](https://www.acleddata.com/about-acled/). 
+
+> The ACLED project codes reported information on the type, agents, exact location, date,
+and other characteristics of political violence events, demonstrations and select
+politically relevant non-violent events. ACLED focuses on tracking a range of violent and
+non-violent actions by political agents, including governments, rebels, militias,
+communal groups, political parties, external actors, rioters, protesters and civilians. Data
+contain specific information on the date, location, group names, interaction type, event
+type, reported fatalities and contextual notes. 
+
+
+You are provided with two datasets:
+  
+* __events_data__ - news reports of armed conflicts with detailed information about each event.
+* __region_data__ - information about the locations appearing in `events_data` and the corresponding country and region.
+
+```{r}
+event_data <- read_csv(here("data/event_data.csv"))
+region_data <- read_csv(here("data/region_data.csv"))
+```
+
+### Wrangling and visualization
+
+
+__1.a__ From the dataset `event_data`, you will use only:
+  
+* `event_id_cnty` - unique event identifier
+* `event_date` - date when the event happened
+* `event_type` - type of the conflict 
+* `actor1` - first party associated with the conflict
+* `actor2` - second party associated with the conflict
+* `country` - name of the country where the event happened 
+* `location` - name of the location where the event happened
+* `source` - what was the source of the report for the event
+* `source_scale` -  whether the source for most information is at the local, regional, national or international level
+* `notes` - additional contextual important details
+* `fatalities` - number of reported fatalities related to the event
+
+Modify `event_data` to select only the variables mentioned above.
+
+```{r}
+## Your code goes here
+```
+
+__1.b__ Use `lubridate`'s `dmy` function to transform `event_date` to a **"YYYY - MM - DD" format**. What is the time period covered by this dataset? 
+
+```{r}
+## Your code goes here
+```
+
+__1.c__ How many countries are mentioned in the dataset? Which one has the highest number of armed conflicts? Create a barplot with the number of conflicts per country? 
+(Hint: use `reorder` so that the counts are displayed in an orderly fashion.) 
+Interpret the figure.
+
+```{r}
+## Your code goes here
+```
+
+__1.d__ To complete the information in `event_data`, add a column `region` using the data from `region_data`. The unique combination you can use for a join is `c("country","location")`. What will happen if you join the datasets by `location`?
+
+```{r}
+## Your code goes here
+```
+
+
+__1.e__ Add two new columns to `event_data` for the __month__ and __year__, extracted from `event_date`. Create a line plot that displays the number of monthly conflicts per month for each year 2015 to 2017. Do you notice a specific year with particularly high number of conflicts?  
+
+
+```{r}
+## Your code goes here
+```
+__1.f__ Create another line plot  of the number of conflicts for each month **per country**. What can you notice? Can you relate the plot to recent worldwide events?
+
+```{r}
+## Your code goes here
+```
+
+### Fact checking 
+
+Nigeria's President Muhammadu Buhari has repeatedly said that the Boko Haram jihadist group had been defeated, but [this article from BBC analysis of Boko Haram attacks](http://www.bbc.com/news/world-africa-42735414) shows that little has changed. With the data that you already have, you can do the fact checking yourself. 
+
+__1.g__ From `event_data` filter only the conflicts based in Nigeria, and only the ones where Boko Haram appears as `actor1` or `actor2`. Print the number of fatalities per year resulting from those conflicts. Has the number of fatalities gone down in 2016 and 2017 compared to 2015 as president Buhari is stating?
+  
+```{r}
+## Your code goes here
+```
+
+
+__1.h__ Another interesting fact mentioned in the BBC article is that the coverage of conflicts in Western Africa is limited especially at the level of **local** sources. To investigate this claim, produce a barplot for the number of news reports (conflicts) coming from different `source_scale`, namely "International", "National" and "Local" by region. 
+(Hint: use `fct_reorder` and `fill` to produce a data to chart ratio as high as possible.)
+Is the statement about limited local reporting in Western Africa supported by this graph?
+  
+```{r}
+## Your code goes here
+```
+
+
