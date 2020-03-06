@@ -5,38 +5,43 @@ In this exercise, you will use the `mtcars` dataset from the `datasets` package.
 __2.a__ Load the dataset mtcars. How many observations and variables does this dataset have?
 
 ```{r}
-# your code goes here
+library(datasets)
+mtcars<-datasets::mtcars
 ```
 
 __2.b__ Print out the mtcars data frame sorted by hp (descending order).
 
 ```{r}
-# your code goes here
+mtcars%>%arrange(desc(hp))
 ```
 
 __2.c__ Create a new object named `cars_cyl` and assign to it the `mtcars` data frame grouped by the number of cylinders.
 
 ```{r}
-# your code goes here
+cars_cyl <- mtcars %>% group_by(cyl) %>% arrange(cyl)
 ```
 
 __2.d__ Modify `cars_cyl` to remove all variables except the average miles/(US) gallon and gross horsepower for each cylinder group.
 
 ```{r}
-# your code goes here
+cars_cyl <-  cars_cyl %>% group_by(cyl) %>%  select(cyl, hp, mpg) 
 ```
 
 __2.e__ Print out the average miles/(US) gallon and gross horsepower for each cylinder group.
 What can you conclude about the effect of the number of cylinders on the other two variables?
 
 ```{r}
-# your code goes here
+cars_cyl%>% select(mpg,hp,cyl)%>%print
+#We can observe a negative correlation between the variables mpg and cyl. In the other hand, we observe a positive correlation between the variables hp and cyl
 ```
 
 __2.f__ Improve the summary statistics by also displaying the median, the minimum, the maximum, the standard deviation and the count.
 
 ```{r}
-# your code goes here
+summarise(cars_number=n(),
+           cars_cyl, mean(hp), median(hp), min(hp), 
+           max(hp), sd(hp), mean(mpg), median(mpg), 
+           min(mpg), max(mpg), sd(hp))
 ```
 
 __2.g__ Modify `cars_cyl` by adding a new variable called `perf = hp/mpg` and another
@@ -44,27 +49,34 @@ variable `rank` indicating the rank of the cars in terms of performance (the hig
 Print out the resulting table by decreasing performance.
 
 ```{r}
-# your code goes here
+cars_cyl<-cars_cyl %>% mutate( perf = hp/mpg, rank=rank(-perf)) %>% arrange(desc(perf))
+
+print(cars_cyl)
 ```
 
 __2.h__ Print out the average performance for each 
 number of cylinders. What can you say about the relationship between the two variables?
 
 ```{r}
-# your code goes here
+cars_cyl %>% summarise(avg_perf = mean(perf))
+#The relationship between the two variables is (positively) exponential
 ```
 
 __2.i__ Using the full dataset, plot the relationship between the weight and miles per US gallon, with a different color for each number of cylinder. What can you conclude about the relationships between the three variables? Bonus: add a (linear) regression line for each group.
 
 ```{r}
-# your code goes here
+ggplot(mtcars, aes(wt,mpg))+ 
+  geom_jitter(height = 2, width = 2, color=mtcars$cyl) + 
+  geom_smooth(method = lm, se=FALSE, mapping=aes(group=mtcars$cyl))
+
+# We observe a negative relationship between mpg and wt. No specific relationship between cyl and wt. Finally, We observe a positive relationship between mpg and cyl
 ```
 
 __2.j__ Using the full dataset, plot the performance (gross horsepower divided by miles per US gallon) as a function of the weight, with a different color for each number of cylinders and a different shape for each type of transmission. What can you conclude about the relationships 
 between the four variables?
 
 ```{r}
-# your code goes here
+ggplot(mutate(mtcars, perf = hp/mpg), mapping=aes(mpg,perf)) + geom_point(height = 2, width = 2, color=mtcars$cyl, shape=mtcars$am) 
 ```
 
 __2.k__ Save `cars_cyl` as a `.csv` into the `results` subdirectory in your project.

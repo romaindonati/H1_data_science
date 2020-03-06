@@ -4,7 +4,7 @@ In this exercise, you will use the `airquality` dataset from the `datasets` pack
 This dataset contains information about air quality measurements in New York between May 1973 and September 1973. A preview of the dataset:
 
 ```{r}
-
+rm(list=ls())
 data(airquality)
 head(airquality)
 
@@ -13,39 +13,41 @@ head(airquality)
 __3.a__ Transform the temperature from degrees Farhenheit to degrees Celsius.
 
 ```{r}
-# your code goes here
+airquality<-mutate(airquality, Temp= (Temp - 32) * (5 / 9))
 ```
 
 __3.b__ For how many days has the temperature been higher than 30 degrees?
 
 ```{r}
-# your code goes here
+summarize(airquality, "temp >30" = sum(airquality$Temp >30))
+
 ```
 
 __2.c__ How many of those days were in July or August?
 
 ```{r}
-# your code goes here
+airquality %>% filter(Month == 6|Month==7 & Temp >= 30) %>% count() 
 ```
 
 
 __3.d__ Display the average monthly temperature.
 
 ```{r}
-# your code goes here
+airquality %>% group_by(Month) %>% summarise(avg_monthly_temp = mean(Temp, na.rm = TRUE))
 ```
 
 
 __3.e__ Display ten randomly selected observations from the dataset. What happens if you execute your code a few times? How can you make sure that each execution returns the exact 10 rows?
 
 ```{r}
-# your code goes here
+airquality[sample(nrow(airquality), 10),]
+#Everytime we run the function, the results are differents. To fix the problem, we can set the seed to a specific number, which we'll give us the same results after each data run (using function seed(x)).
 ```
 
 __2.f__ Display the number of days in each month.
 
 ```{r}
-# your code goes here
+airquality %>% group_by(Month) %>% count() 
 ```
 
 __3.g__ Display the days where the temperature was lower than 20 degrees with observations
@@ -53,7 +55,7 @@ __3.g__ Display the days where the temperature was lower than 20 degrees with ob
 * and arranged in descending order of the Month and ascending order of Day.
 
 ```{r}
-# your code goes here
+airquality %>% filter(Temp<20) %>% arrange(desc(Month),(Day)) %>% drop_na()
 ```
 
 
@@ -62,12 +64,21 @@ should contain 5 boxplots (i.e., one for each month), with months as the x-axis
 and the temperature as the y-axis. What can you say about the monthly temperature evolution?
 
 ```{r}
-# your code goes here
+boxplot(Temp~Month,
+data=airquality,
+main="Different boxplots for each month",
+xlab="Month Number",
+ylab="Degree celcius",
+col="green",
+border="brown")
+
+ggplot(airquality, mapping=aes(Month,Temp)) + geom_boxplot()+facet_grid(cols = vars(Month))
 ```
 
 __3.i__ For the days where such data is available, create a scatter plot of the ozone concentration per month. Add the monthly averages in a different color as well as a line that connects them. 
 What can you say about the relationship between Ozone and Month? Is there any similarity to the pevious plot? Describe the link between temperature, ozone and month.
 
 ```{r}
-# your code goes here
+airquality %>% drop_na() %>% 
+ggplot(mapping=aes(x=Temp, y=Ozone , color=factor(Month))) + geom_point() + geom_line()
 ```

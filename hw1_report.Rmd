@@ -1,6 +1,6 @@
 ---
 title: "Homework 1 - Report"
-author: "Name I, First Name I and Name II, First Name II"
+author: "Donati, Romain and Neziri, Rina"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
@@ -37,7 +37,8 @@ knitr::opts_chunk$set(
   fig.show = "hold"
 )
 
-ggplot::theme_set(theme_light())
+
+ggplot2::theme_set(theme_light())
 
 options(
   digits = 3,
